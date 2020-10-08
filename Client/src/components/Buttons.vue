@@ -3,7 +3,7 @@
     <!-- calculation -->
     <div :class="{
           'break-words border-t border-r border-l rounded-t font-bold py-3 px-5': true,
-          'text-3xl text-blue-600 text-shadow': result,
+          'text-3xl text-white bg-blue-400 text-shadow': result,
           'text-5xl text-blue-800': !result
         }">
       {{numbers[1]}}
@@ -12,7 +12,7 @@
     </div>
 
     <!-- result -->
-    <div v-if="result" class="break-all border-r border-l rounded-t text-blue-800 font-extrabold text-3xl py-2 px-5">
+    <div v-if="result" class="break-all border-r border-l bg-green-400 text-blue-800 font-extrabold text-3xl py-2 px-5">
       = {{result}}
     </div>
 
@@ -72,6 +72,9 @@ export default {
       // reset any errors
       this.error = null;
       this.result = null;
+
+      // remove leading decimal (if necessary)
+      this.removeLeadingDecimal();
 
       // send POST request to our REST api endpoint
       fetch("https://localhost:44345/calculator/calculate", {
@@ -133,6 +136,15 @@ export default {
       if (this.numbers[active].indexOf(".") === -1) {
         // add decimal
         this.numbers[active] += ".";
+      }
+    },
+    removeLeadingDecimal: function() {
+      // remove lone decimal point at the end of each number if no trailing numbers
+      for (var i = 1; i <= 2; i++) {
+        const number = i.toString();
+        if (this.numbers[number].endsWith('.')) {
+          this.numbers[number] = this.numbers[number].replace('.', '');
+        }
       }
     }
   }
