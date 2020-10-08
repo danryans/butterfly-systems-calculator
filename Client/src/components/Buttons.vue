@@ -1,10 +1,27 @@
 <template>
   <div class="shadow-lg">
-    <div class="border-t border-r border-l rounded-t text-blue-800 font-bold text-6xl py-3 px-5">
+    <!-- calculation -->
+    <div :class="{
+          'break-words border-t border-r border-l rounded-t font-bold py-3 px-5': true,
+          'text-3xl text-blue-600 text-shadow': result,
+          'text-5xl text-blue-800': !result
+        }">
       {{numbers[1]}}
       <span class="ml-1 mr-1" v-if="operator">{{operator}}</span>
       {{numbers[2]}}
     </div>
+
+    <!-- result -->
+    <div v-if="result" class="break-all border-r border-l rounded-t text-blue-800 font-extrabold text-3xl py-2 px-5">
+      = {{result}}
+    </div>
+
+    <!-- error (if any - hopefully not!) -->
+    <div v-if="error" class="text-red-400 text-center text-lg border-l border-r p-3">
+      <div class="text-red-400 font-bold">Oh no! 😞</div>
+      <div class="text-sm">{{error}}</div>
+    </div>
+
     <!-- buttons -->
     <div class="border-l border-r border-b p-6">
       <div class="grid grid-cols-4 gap-4">
@@ -45,32 +62,53 @@ export default {
       numbers: {
         "1": "0",
         "2": ""
-      }
+      },
+      error: null,
+      result: null
     };
   },
   methods: {
     evaluate: function() {
+      // reset any errors
+      this.error = null;
+      this.result = null;
+
+      // send POST request to our REST api endpoint
       fetch("https://localhost:44345/calculator/calculate", {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          "number1": Number(this.number1),
-          "number2": Number(this.number2),
+          "number1": Number(this.numbers["1"]),
+          "number2": Number(this.numbers["2"]),
           "operation": this.operator
         })
       })
-        .then(reply => reply.json())
-        .then(response => console.log(response));
+      // check response was great, if not lets print an error
+      .then(reply => {
+        if (!reply.ok) {
+          reply.json().then(error => this.error = error.message);
+        } else {
+          return reply.json();
+        }
+      })
+
+      // handle success
+      .then(response => this.result = response.result)
+
+      // handle network errors
+      .catch(error => this.error = error);
     },
     clear: function() {
       this.active = 1;
       this.operator = null;
+      this.result = null;
       this.numbers = {
-        1: "0",
-        2: ""
+        "1": "0",
+        "2": ""
       };
+      this.error = null;
     },
     setOperator: function (operator) {
       this.operator = operator;
