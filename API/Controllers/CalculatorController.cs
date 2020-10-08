@@ -49,11 +49,11 @@ namespace API.Controllers
                     result = (decimal)(calculation.number1 - calculation.number2);
                     break;
 
-                case '*':
+                case 'x':
                     result = (decimal)(calculation.number1 * calculation.number2);
                     break;
 
-                case '/':
+                case '%':
                     // Check pre-emptively for a divide by 0
                     if (calculation.number1 == 0 || calculation.number2 == 0)
                     {
@@ -69,7 +69,7 @@ namespace API.Controllers
                 default:
                     return NotFound(new
                     {
-                        message = "Invalid operation found. Please ensure operation is +|-|*|/"
+                        message = "Invalid operation found. Please ensure operation is +|-|x|%"
                     });
             }
 

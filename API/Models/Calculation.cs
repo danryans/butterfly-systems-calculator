@@ -13,7 +13,7 @@ namespace API.Models
         [Required]
         public decimal? number2 { get; set; }
         [Required]
-        [RegularExpression("\\+|-|\\*|\\/", ErrorMessage = "Invalid operator present, please ensure property only contains values from range: +|-|*|/")]
+        [RegularExpression("\\+|-|x|%", ErrorMessage = "Invalid operator present, please ensure property only contains values from range: +|-|*|/")]
         public char? operation { get; set; }
     }
 }

@@ -39,7 +39,7 @@ export default {
   },
   data() {
     return {
-      operations: ['+', '-', 'x ', '%'],
+      operations: ['+', '-', 'x', '%'],
       operator: null,
       active: 1,
       numbers: {
@@ -50,7 +50,17 @@ export default {
   },
   methods: {
     evaluate: function() {
-      fetch("http://localhost:5000/calculator/calculate/")
+      fetch("https://localhost:44345/calculator/calculate", {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "number1": Number(this.number1),
+          "number2": Number(this.number2),
+          "operation": this.operator
+        })
+      })
         .then(reply => reply.json())
         .then(response => console.log(response));
     },

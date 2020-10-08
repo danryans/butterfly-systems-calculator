@@ -43,6 +43,8 @@ namespace API
 
             app.UseRouting();
 
+            app.UseCors(cors => cors.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true));
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
