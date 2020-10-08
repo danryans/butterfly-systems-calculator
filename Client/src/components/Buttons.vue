@@ -77,7 +77,7 @@ export default {
       this.removeLeadingDecimal();
 
       // send POST request to our REST api endpoint
-      fetch("https://localhost:44345/calculator/calculate", {
+      fetch("https://localhost:5001/calculator/calculate", {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'
