@@ -1,5 +1,5 @@
 <template>
-  <div class="text-5xl text-white text-right mx-4">{{current}}</div>
+  <div class="border-blue-800 border-t border-r border-l rounded-t shadow-sm bg-blue-200 text-5xl text-white text-right px-5">{{current}}</div>
 </template>
 
 <script>
@@ -13,9 +13,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-div {
-  font-family: 'Noto Sans SC', sans-serif;
-}
-</style>

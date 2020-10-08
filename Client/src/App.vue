@@ -1,6 +1,6 @@
 <template>
   <div class="w-screen flex justify-center">
-    <main class="w-1/4 border rounded bg-blue-200 p-1 mt-12">
+    <main class="w-1/4 p-3 mt-12">
       <Calculation/>
       <Buttons/>
     </main>
