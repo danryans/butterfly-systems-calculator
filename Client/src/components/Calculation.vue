@@ -1,5 +1,5 @@
 <template>
-  <div class="bar">{{current}}</div>
+  <div class="text-5xl text-white text-right mx-4">{{current}}</div>
 </template>
 
 <script>
@@ -13,3 +13,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+div {
+  font-family: 'Noto Sans SC', sans-serif;
+}
+</style>
